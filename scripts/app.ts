@@ -1,1 +1,7 @@
-//Add your initialization logic here
+/**
+ * Main app class.
+ */
+class App {
+  name: string;
+  age: number;
+}

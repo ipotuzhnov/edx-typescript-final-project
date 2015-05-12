@@ -1,2 +1,5 @@
 scripts/*.js
 scripts/*.map
+node_modules
+debug
+release
