@@ -1,32 +1,29 @@
 var gulp = require('gulp'),
+    merge = require('merge2'),
     srcmap = require('gulp-sourcemaps'),
     ts = require('gulp-typescript');
 
-var tsProject = ts.createProject('scripts/tsconfig.json');/*, {
-  sortOutput: true
-});*/
+var tsProject = ts.createProject('scripts/tsconfig.json');
 
-gulp.task('release', function() {
-  var tsResult = tsProject.src()
-    .pipe(ts(tsProject));
-
-  return tsResult.js
-    .pipe(gulp.dest('release'));
-});
-
-
-gulp.task('debug', function() {
+gulp.task('scripts', function() {
   var tsResult = tsProject.src()
     .pipe(srcmap.init())
-    .pipe(ts(tsProject));
+    .pipe(ts({
+      module: "amd"/*,
+      declarationFiles: true*/
+    }));
 
-  return tsResult.js
-    .pipe(srcmap.write('.'))
-    .pipe(gulp.dest('debug'));
+  return merge([
+    tsResult.js
+      .pipe(srcmap.write('.'))
+      .pipe(gulp.dest('scripts'))/*,
+    tsResult.dts
+      .pipe(gulp.dest('scripts'))*/
+  ]);
 });
 
-gulp.task('watch', function() {
-  gulp.watch(['debug']);
+gulp.task('watch', ['scripts'], function() {
+  gulp.watch('scripts/*.ts', ['scripts']);
 });
 
-gulp.task('default', ['debug', 'watch']);
+gulp.task('default', ['scripts', 'watch']);
