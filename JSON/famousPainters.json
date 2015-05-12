@@ -3,28 +3,37 @@
 		{
 			"name": "Michelangelo",
 			"style:": "Renaissance",
+			"birthday": 123,
+			"birthplace": "Monaco",
 			"examples: ": [ "David", "Sistine Chapel", "The Last Judgement" ]
 		},
 		{
 			"name": "Raphael",
 			"style:": "Renaissance",
+			"birthday": 123,
+			"birthplace": "Monaco",
 			"examples: ": [ "School at Athens", "Lucretia", "Saint George and the Dragon" ]
 		},
 		{
 			"name": "Vincent van Gogh",
 			"style:": "Post-Impressionist",
+			"birthday": 123,
+			"birthplace": "Monaco",
 			"examples: ": [ "Self-portrait", "The Starry Night", "The Yellow House" ]
 		},
 		{
 			"name": "Claude Monet",
 			"style:": "Impressionist",
+			"birthday": 123,
+			"birthplace": "Monaco",
 			"examples: ": [ "Morning on the Seine", "The Woman in the Green Dress", "Sunrise" ]
 		},
 		{
 			"name": "Johannes Vermeer",
 			"style:": "Baroque",
+			"birthday": 123,
+			"birthplace": "Monaco",
 			"examples: ": [ "The Milkmaid", "Girl with a Pearl Earring", "The Music Lesson" ]
-		},
+		}
 	]
-
 }

@@ -1,24 +1,84 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>TypeScript HTML App</title>
-    <!--link rel="stylesheet" href="app.css" type="text/css" /-->
-    <link href="styles/app.css" rel="stylesheet" />
+  <meta charset="utf-8" />
+  <title>TypeScript HTML App</title>
+  <!--link rel="stylesheet" href="app.css" type="text/css" /-->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="styles/app.css" />
 </head>
 <body>
+  <div class="jumbotron">
     <div class="row">
-        <div class="col-md-1">
-            <img class="logoImg" src="images/brush.png" />
-        </div>
-        <div class="col-md-11 pull-left">
-            <h1>Famous Painters</h1>
-        </div>
+      <div class="col-md-2">
+        <img class="logoImg img-responsive center-block" src="images/brush.png" />
+      </div>
+      <div class="col-md-10 pull-left">
+        <h1>Famous Painters</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-group">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Painter</h3>
+      </div>
+      <div class="panel-body" >
+        <select id="paintersList">
+          <option disabled>Choose a painter. . .</option>
+        </select>
+      </div>
     </div>
 
-    <script data-main="scripts/main"
-            src="scripts/libs/require.js"></script>
-    <div id="content"></div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Style</h3>
+      </div>
+      <div class="panel-body" id="painterStyle">
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Birthday</h3>
+      </div>
+      <div class="panel-body" id="painterBirthday">
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Birthplace</h3>
+      </div>
+      <div class="panel-body" id="painterBirthplace">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Paintings</h3>
+    </div>
+    <div class="panel-body" >
+      <div class="text-center">
+        <div class="btn-group" role="group" aria-label="...">
+          <button type="button" class="btn btn-default btn-lg" id="btnPrev">Prev</button>
+          <button type="button" class="btn btn-default btn-lg" id="btnNext">Next</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <img class="paintingImg" id="paintingImg"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script data-main="scripts/main"
+          src="scripts/libs/require.js"></script>
 </body>
 </html>

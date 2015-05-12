@@ -9,7 +9,8 @@ gulp.task('scripts', function() {
   var tsResult = tsProject.src()
     .pipe(srcmap.init())
     .pipe(ts({
-      module: "amd"/*,
+      module: "amd",
+      target: "es5"/*,
       declarationFiles: true*/
     }));
 

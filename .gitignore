@@ -1,5 +1,6 @@
 scripts/*.js
 scripts/*.map
+scripts/*d.ts
 node_modules
 debug
 release

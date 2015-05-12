@@ -15,8 +15,18 @@
         "!./node_modules/**/*.ts"
     ],
     "files": [
+        "./app.d.ts",
         "./app.ts",
+        "./gallery.d.ts",
+        "./gallery.ts",
+        "./interfaces.d.ts",
+        "./interfaces.ts",
+        "./list.ts",
         "./main.ts",
+        "./painter.ts",
+        "./painting.ts",
+        "./renderer.d.ts",
+        "./renderer.ts",
         "./typings/jquery.d.ts",
         "./typings/require.d.ts"
     ]
