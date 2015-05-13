@@ -1,11 +1,24 @@
 import I = require("./interfaces");
 export class Gallery implements I.IGallery {
-  private items: I.IPainting[];
-  private image: HTMLImageElement;
+  private items: I.IPainting[] = [];
   private current = 0;
 
-  constructor(image: HTMLImageElement) {
-    this.image = image;
+  private elements: I.IGalleyElements;
+
+  constructor(elements: I.IGalleyElements) {
+    this.elements = elements;
+
+    // Attach event listeners
+
+    var prevBtnEl = this.elements.prevBtnEl;
+    prevBtnEl.onclick = () => {
+      this.renderPrev();
+    }
+
+    var nextBtnEl = this.elements.nextBtnEl;
+    nextBtnEl.onclick = () => {
+      this.renderNext();
+    }
   }
 
   set paintings(items: I.IPainting[]) {
@@ -13,24 +26,26 @@ export class Gallery implements I.IGallery {
   }
 
   render(item: number = 0) {
-    if (item < 0 || item >= length) {
+    if (item < 0 || item >= this.items.length) {
       return;
     }
 
-    //this.image = new HTMLImageElement();
-    this.image.innerHTML = this.items[item].name;
-    //this.image.src = this.items[item].src;
+    this.current = item;
+
+    var nameEl = this.elements.nameEl;
+    var imageEl = this.elements.imageEl;
+    var painting = this.items[item];
+    nameEl.innerHTML = painting.name;
+    imageEl.src = painting.src;
+    imageEl.alt = painting.name;
+    imageEl.title = painting.name;
   }
 
   renderPrev() {
-    if (this.current > 0) {
-      this.render(this.current--);
-    }
+    this.render(this.current - 1);
   }
 
   renderNext() {
-    if (this.current < this.items.length - 1) {
-      this.render(this.current++);
-    }
+    this.render(this.current + 1);
   }
 }

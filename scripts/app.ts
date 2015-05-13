@@ -2,64 +2,88 @@
 
 import $ = require("jquery");
 import I = require("./interfaces");
-import RendererModule = require("./renderer");
-import Renderer = RendererModule.Renderer;
 import GalleryModule = require("./gallery");
 import Gallery = GalleryModule.Gallery;
-import PainterModule = require("./painter");
-import Painter = PainterModule.Painter;
 
 /**
-* Painters gallery app.
-*/
+ * Painters gallery app.
+ */
 export class App {
   private gallery: I.IGallery;
   private painters: I.IPainter[];
 
-  constructor(image: HTMLImageElement, painters: I.IPainter[]) {
-    this.gallery = new Gallery(image);
-    this.painters = painters;
+  private elements: I.IAppElements;
+
+  constructor(elements: I.IAppElements) {
+    this.elements = elements;
+    this.gallery = new Gallery(elements);
+    this.painters = [];
+
+    // Attach event listeners
+
+    var paintersEl = this.elements.paintersEl;
+    paintersEl.onchange = () => {
+      this.show(+elements.paintersEl.value);
+    };
   }
 
-  render() {
-    var selectNode = <HTMLSelectElement>document.getElementById('paintersList');
-    Renderer.renderOptionElement(selectNode, this.painters);
+  loadData(source: string) {
+    $.getJSON(source, (data) => {
+      var famousPainters: any[] = data.famousPainters;
+      famousPainters.forEach((famousPainter) => {
+        var painter = <I.IPainter>({
+          name: famousPainter.name,
+          style: famousPainter.style,
+          birthday: famousPainter.birthday,
+          birthplace: famousPainter.birthplace,
+          paintings: famousPainter.examples
+        });
+
+        this.painters.push(painter);
+      });
+
+      this.render();
+    });
   }
 
-  select(item: number) {
-    console.log(item);
-    this.gallery.paintings = this.painters[item].paintings;
+  private render() {
+    var paintersEl = this.elements.paintersEl;
+    this.painters.forEach((element, index) => {
+      var opt = document.createElement('option');
+      opt.value = index.toString();
+      opt.innerHTML = element.name;
+      paintersEl.appendChild(opt);
+    });
+  }
+
+  private show(item: number) {
+    var painter = this.painters[item];
+
+    this.elements.styleEl.innerHTML = painter.style;
+    this.elements.birthdayEl.innerHTML = painter.birthday;
+    this.elements.birthplaceEl.innerHTML = painter.birthplace;
+
+    this.gallery.paintings = painter.paintings;
     this.gallery.render();
   }
 }
 
 $(document).ready(() => {
-  var source = 'JSON/famousPainters.json';
-  var painters: I.IPainter[] = [];
-  var app: App;
-  $.getJSON(source, (data) => {
-    var famousPainters: any[] = data.famousPainters;
-    famousPainters.forEach((famousPainter) => {
-      var painter = new Painter({
-        name: famousPainter.name,
-        style: famousPainter.style,
-        birthDay: famousPainter.birthday,
-        birthPlace: famousPainter.birthplace,
-        paintings: famousPainter.examples
-      });
-      painters.push(painter);
-    });
-
-    var image = <HTMLImageElement>document.getElementById('paintingImg');
-    app = new App(image, painters)
-    app.render();
-  });
-
-  var paintersList = <HTMLSelectElement>document.getElementById('paintersList');
-  paintersList.onchange = (e) => {
-    app.select(+paintersList.value);
+  var elements = <I.IAppElements>{
+    // app elements
+    paintersEl  : document.getElementById('paintersList'),
+    styleEl     : document.getElementById('painterStyle'),
+    birthdayEl  : document.getElementById('painterBirthday'),
+    birthplaceEl: document.getElementById('painterBirthplace'),
+    // gallery elements
+    nameEl      : document.getElementById('galleryName'),
+    imageEl     : document.getElementById('galleryImg'),
+    prevBtnEl   : document.getElementById('galleryPrev'),
+    nextBtnEl   : document.getElementById('galleryNext')
   };
 
-  //var app = new App(source);
+  var app = new App(elements);
 
+  var source = 'JSON/famousPainters.json';
+  app.loadData(source);
 });
