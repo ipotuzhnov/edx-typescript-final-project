@@ -10,16 +10,13 @@ gulp.task('scripts', function() {
     .pipe(srcmap.init())
     .pipe(ts({
       module: "amd",
-      target: "es5"/*,
-      declarationFiles: true*/
+      target: "es5"
     }));
 
   return merge([
     tsResult.js
       .pipe(srcmap.write('.'))
-      .pipe(gulp.dest('scripts'))/*,
-    tsResult.dts
-      .pipe(gulp.dest('scripts'))*/
+      .pipe(gulp.dest('scripts'))
   ]);
 });
 
